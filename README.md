@@ -122,34 +122,11 @@ Tips
 - Use precise extraction instructions for niche sites.
 - If the LLM returns few items, the deterministic anchor fallback helps, but you can tune `max_items` in the extractor.
 
-## Troubleshooting
-
-- Playwright missing browser binary error:
-
-  - Error: "BrowserType.launch: Executable doesn't exist..."
-  - Fix: Run `python -m playwright install` in the same environment.
-
-- Import errors in Streamlit: Ensure Streamlit runs with the same `PYTHONPATH` and virtual environment. Start Streamlit from the project root and activate the venv first.
-
-- LLM returns invalid JSON or fails validation: The code attempts to extract JSON blocks from model output and falls back to deterministic anchors. If you need site-specific accuracy, consider increasing `truncate=False` to send more HTML or customizing the prompt in `utils/llm_extractor.py`.
 
 ## Development notes
 
 - The core extraction flow is in `utils/llm_extractor.py`. It first asks the LLM for a structured JSON response; if the response is sparse, it scans anchors for article-like paths and merges results.
 - Playwright usage is async — `smart_scraper_main.py` orchestrates the async flow using `asyncio.run` from Streamlit.
 
-## Contributing
 
-Contributions are welcome. Suggested directions:
-- Add site-specific extraction rules or adapter modules
-- Improve image and excerpt scraping heuristics
-- Add tests for the extraction logic and model output handling
 
-Please open an issue or PR with a clear description of your changes.
-
-## License
-
-This project is provided as-is. Add a license (e.g., MIT) as needed.
-
----
-If you want, I can also add a `requirements.txt` file, a small `Makefile`/taskfile for common commands, or an interactive `max_articles` UI control in Streamlit. Which would you like next?
